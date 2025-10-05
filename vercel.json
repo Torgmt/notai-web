@@ -1,11 +1,12 @@
 {
     "version":  2,
+    "installCommand":  "npm ci --include=dev",
     "buildCommand":  "npm run build",
     "outputDirectory":  "dist",
     "rewrites":  [
                      {
                          "source":  "/api/(.*)",
-                         "destination":  "https://curious-otter-xyz.trycloudflare.com/$1"
+                         "destination":  "https://particular-summit-marked-blacks.trycloudflare.com/$1"
                      }
                  ]
 }
