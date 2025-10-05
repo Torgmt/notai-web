@@ -1,0 +1,16 @@
+﻿{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://DIN-EKTE-BACKEND-URL/\" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; connect-src 'self' https://DIN-EKTE-BACKEND-URL; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self' data:" }
+      ]
+    }
+  ]
+}
