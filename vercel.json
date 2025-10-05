@@ -5,7 +5,7 @@
     "rewrites":  [
                      {
                          "source":  "/api/(.*)",
-                         "destination":  "https://DIN-NYE-TRYCLOUDFLARE-URL/$1"
+                         "destination":  "https://curious-otter-xyz.trycloudflare.com/$1"
                      }
                  ]
 }
