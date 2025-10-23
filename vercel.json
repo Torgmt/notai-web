@@ -1,12 +1,18 @@
 {
-    "version":  2,
-    "installCommand":  "npm ci --include=dev",
-    "buildCommand":  "npm run build",
-    "outputDirectory":  "dist",
-    "rewrites":  [
-                     {
-                         "source":  "/api/(.*)",
-                         "destination":  "https://particular-summit-marked-blacks.trycloudflare.com/$1"
-                     }
-                 ]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "pnpm run vercel:info && pnpm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://designs-properties-affordable-graduated.trycloudflare.com/$1"
+    },
+    {
+      "source": "/((?!api).*)",
+      "destination": "/index.html"
+    }
+  ]
 }
+
