@@ -1,0 +1,67 @@
+﻿/**
+ * Sentral API-helper som unngår dobbel-slash ("/api//...").
+ * Bruk funksjonene under i stedet for fetch("/api/...").
+ */
+
+export const API_BASE = "/api";
+
+/** Slår sammen base og path uten å lage ekstra "/" */
+export function apiUrl(path: string) {
+  const base = API_BASE.replace(/\/+$/, "");          // fjern trailing "/"
+  const p = (path ?? "").toString().replace(/^\/+/, ""); // fjern leading "/"
+  // Hvis path er tom, returner bare "/api" (frontend kan kalle /api -> backend svarer 200 OK)
+  return p ? `${base}/${p}` : `${base}`;
+}
+
+/** GET JSON */
+export async function apiGet<T = any>(path: string): Promise<T> {
+  const url = apiUrl(path);
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`API GET ${url} -> ${res.status}`);
+  return res.json();
+}
+
+/** POST JSON */
+export async function apiPost<T = any>(path: string, data: any): Promise<T> {
+  const url = apiUrl(path);
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(`API POST ${url} -> ${res.status}`);
+  return res.json();
+}
+
+/** POST FormData (IKKE sett Content-Type manuelt) */
+export async function apiPostForm<T = any>(path: string, formData: FormData): Promise<T> {
+  const url = apiUrl(path);
+  const res = await fetch(url, { method: "POST", body: formData });
+  if (!res.ok) throw new Error(`API POST(form) ${url} -> ${res.status}`);
+  return res.json();
+}
+
+/* ---- Ferdige helpers for dine endepunkter ---- */
+
+export async function getHealth() {
+  // backend eksponerer /health på rot; vi har Vercel rewrite /api/health -> $API/health
+  return apiGet("health");
+}
+
+export async function getConfig() {
+  return apiGet("config");           // -> /api/config
+}
+
+export async function sendChat(payload: { prompt: string; system?: string; max_tokens?: number; temperature?: number; }) {
+  return apiPost("chat", payload);   // -> /api/chat
+}
+
+export async function transcribeFile(file: File) {
+  const fd = new FormData();
+  fd.append("file", file);
+  return apiPostForm("transcribe", fd); // -> /api/transcribe
+}
+
+export async function saveNote(text: string) {
+  return apiPost("note", { text });  // -> /api/note
+}

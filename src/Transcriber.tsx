@@ -5,8 +5,7 @@ import "katex/dist/katex.min.css";
 
 
 const DEV = typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)/.test(window.location.hostname);
-const devHeaders = () => (DEV ? { ...devHeaders() } : {});
-/* ------- Math helpers ------- */
+const devHeaders = () => (DEV ? { "X-Debug-Bypass-Auth": "1" } : {});/* ------- Math helpers ------- */
 function normalizeMath(input: string): string {
   let t = input;
   t = t.replace(/\b(ganger|multiplisert(?:\s+med)?)\b/gi, "*");
@@ -208,5 +207,24 @@ export default function Transcriber() {
     </section>
   );
 }
+
+{/* notai.v1 sanity: POST /note */}
+<div className="mt-4 flex gap-2">
+  <button
+    data-testid="post-note-test"
+    onClick={async () => {
+      try {
+        const r = await postNote("hei");
+        alert(`POST /note -> saved: ${r.saved}, id: ${r.id ?? "null"}`);
+      } catch (e:any) {
+        alert(String(e?.message ?? e));
+      }
+    }}
+    className="rounded-lg px-3 py-2 border"
+    title="Kaller POST /note fra frontend"
+  >
+    Test /note
+  </button>
+</div>
 
 

@@ -1,4 +1,6 @@
-﻿:root {
+﻿@import "tailwindcss";
+
+:root {
   --bg-900: #0b0f17;
   --card: rgba(255,255,255,0.05);
   --stroke: rgba(255,255,255,0.08);
@@ -110,3 +112,4 @@ body {
 /* KaTeX tweaks */
 .katex { font-size: 1.02rem; }
 .katex-display { margin: 0; }
+
