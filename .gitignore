@@ -8,3 +8,14 @@ dist/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local Netlify folder
+.netlify
+
+.vercel
+node_modules/
+dist/
+.vercel/
+.vscode/
+.DS_Store
+pnpm-lock.yaml
