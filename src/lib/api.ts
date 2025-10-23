@@ -1,5 +1,6 @@
-﻿const API = "http://127.0.0.1:8000";
-
+﻿const DEV = typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)/.test(window.location.hostname);
+export const devHeaders = () => (DEV ? { "X-Debug-Bypass-Auth": "1" } : {});
+export const API = "/api";
 export async function health() {
   const r = await fetch(`${API}/health`);
   if (!r.ok) throw new Error(`/health ${r.status}`);
@@ -50,3 +51,19 @@ export async function transcribe(file: File, lang_hint?: string) {
     segments: Segment[];
   }>;
 }
+export async function postNote(text: string): Promise<{ saved: boolean; id: string | null }> {
+  const res = await fetch(`${API}/note`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...devHeaders() },
+    body: JSON.stringify({ text }),
+  });
+  if (!res.ok) {
+    const t = await res.text().catch(() => "");
+    throw new Error(`POST /note failed: ${res.status} ${res.statusText} ${t}`);
+  }
+  return res.json();
+}
+
+
+
+
