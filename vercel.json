@@ -1,17 +1,20 @@
 ﻿{
-    "$schema":  "https://openapi.vercel.sh/vercel.json",
-    "framework":  "vite",
-    "installCommand":  "npm install -g corepack \u0026\u0026 corepack enable \u0026\u0026 corepack prepare pnpm@9.12.2 --activate \u0026\u0026 corepack pnpm install --no-frozen-lockfile",
-    "buildCommand":  "corepack pnpm run vercel:info \u0026\u0026 corepack pnpm run build",
-    "outputDirectory":  "dist",
-    "rewrites":  [
-                     {
-                         "source":  "/api/(.*)",
-                         "destination":  "https://factors-seven-essentials-investment.trycloudflare.com/"
-                     },
-                     {
-                         "source":  "/((?!api).*)",
-                         "destination":  "/index.html"
-                     }
-                 ]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "pnpm run vercel:info && pnpm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://factors-seven-essentials-investment.trycloudflare.com/$1"
+    },
+    {
+      "source": "/((?!api).*)",
+      "destination": "/index.html"
+    }
+  ]
 }
+
+
+
