@@ -12,7 +12,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --port 5174",
-    "vercel:info": "node -v && pnpm -v"
+    "vercel:info": "node -v && corepack pnpm -v"
   },
   "dependencies": {
     "firebase": "^12.3.0",
